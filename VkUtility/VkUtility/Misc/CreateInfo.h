@@ -2,7 +2,7 @@
 #include <vulkan/vulkan.h>
 // ReSharper disable CppInitializedValueIsAlwaysRewritten
 
-namespace VkUtilty::CreateInfo {
+namespace VkUtility::CreateInfo {
 
 [[nodiscard]] inline VkCommandPoolCreateInfo vk_command_pool_create_info(const uint32_t queue_family_idx,
                                                                          const VkCommandPoolCreateFlags flags = 0) {
@@ -28,4 +28,4 @@ namespace VkUtilty::CreateInfo {
   return info;
 }
 
-}  // namespace VkUtilty::CreateInfo
+}  // namespace VkUtility::CreateInfo

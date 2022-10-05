@@ -3,7 +3,7 @@
 
 namespace VkUtility::Exceptions {
 
-class VkStartupException final : public std::exception {
+class VkUtilityException final : public std::exception {
  public:
   [[nodiscard]] const char* what() const noexcept override {
     return "VkUtility failed";

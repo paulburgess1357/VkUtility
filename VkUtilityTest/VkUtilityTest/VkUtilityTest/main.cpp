@@ -1,3 +1,19 @@
+#include "VkStartup/Context/InitContext.h"
+#include "VkUtility/Command/Command.h"
+
 int main() {
-return 0;
+  VkStartup::InitContextOptions options;
+  options.enable_validation = true;
+  VkStartup::InitContext context{std::move(options)};
+
+  // Test command buffer creation
+  auto& ctx = context.context();
+  auto graphics_pool = VkUtility::Command::create_command_pool(
+      ctx.device(), ctx.vk_queues.at(VkShared::Enums::QueueFamily::Graphics).family_index,
+      VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT);
+  const auto graphics_buffer = VkUtility::Command::create_command_buffer(ctx.device(), graphics_pool());
+  if (graphics_buffer) {
+    return 0;
+  }
+  return 1;
 }
