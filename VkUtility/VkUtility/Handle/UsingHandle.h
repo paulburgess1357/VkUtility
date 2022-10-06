@@ -4,4 +4,6 @@
 
 namespace VkUtility {
 using VkCommandPoolHandle = VkShared::THandle<CreateDestroyCommandPool>;
-}
+using VkSemaphoreHandle = VkShared::THandle<CreateDestroySemaphore>;
+using VkFenceHandle = VkShared::THandle<CreateDestroyFence>;
+}  // namespace VkUtility

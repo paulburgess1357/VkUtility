@@ -3,6 +3,7 @@
 #include "VkUtility/Misc/CreateInfo.h"
 #include "VkUtility/Misc/Exceptions.h"
 #include "VkShared/Macros.h"
+#include <vulkan/vulkan.h>
 
 namespace VkUtility::Command {
 
