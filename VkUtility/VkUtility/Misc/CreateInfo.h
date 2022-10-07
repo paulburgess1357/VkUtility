@@ -1,5 +1,6 @@
 #pragma once
 #include <vulkan/vulkan.h>
+#include <vector>
 // ReSharper disable CppInitializedValueIsAlwaysRewritten
 
 namespace VkUtility::CreateInfo {
@@ -41,6 +42,14 @@ namespace VkUtility::CreateInfo {
   info.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
   info.pNext = nullptr;
   info.flags = flags;
+  return info;
+}
+
+[[nodiscard]] inline VkShaderModuleCreateInfo vk_shader_module_create_info(const std::vector<char>& shader_data) {
+  VkShaderModuleCreateInfo info = {};
+  info.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+  info.codeSize = shader_data.size();
+  info.pCode = reinterpret_cast<const uint32_t*>(shader_data.data());
   return info;
 }
 

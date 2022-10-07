@@ -65,4 +65,24 @@ class CreateDestroyFence {
   VkDevice m_device{VK_NULL_HANDLE};
 };
 
+class CreateDestroyShaderModule {
+ public:
+  void create() {
+    handle = VK_NULL_HANDLE;
+  }
+  void create(const VkShaderModuleCreateInfo& info, VkDevice vk_device) {
+    VkCheck(vkCreateShaderModule(vk_device, &info, nullptr, &handle), Exceptions::VkUtilityException());
+    m_device = vk_device;
+  }
+  void destroy() const {
+    if (handle && m_device) {
+      vkDestroyShaderModule(m_device, handle, nullptr);
+    }
+  }
+  VkShaderModule handle{VK_NULL_HANDLE};
+
+ private:
+  VkDevice m_device{VK_NULL_HANDLE};
+};
+
 }  // namespace VkUtility
