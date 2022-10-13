@@ -9,9 +9,9 @@ namespace VkUtility::CreateInfo {
                                                                          const VkCommandPoolCreateFlags flags = 0) {
   VkCommandPoolCreateInfo info = {};
   info.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
-  info.pNext = nullptr;
   info.queueFamilyIndex = queue_family_idx;
   info.flags = flags;
+  info.pNext = nullptr;
   return info;
 }
 
@@ -20,28 +20,26 @@ namespace VkUtility::CreateInfo {
     const VkCommandBufferLevel level = VK_COMMAND_BUFFER_LEVEL_PRIMARY) {
   VkCommandBufferAllocateInfo info = {};
   info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-  info.pNext = nullptr;
-
   info.commandPool = pool;
   info.commandBufferCount = buffer_count;
   info.level = level;
-
+  info.pNext = nullptr;
   return info;
 }
 
 [[nodiscard]] inline VkSemaphoreCreateInfo vk_semaphore_create_info(const VkSemaphoreCreateFlags flags = 0) {
   VkSemaphoreCreateInfo info = {};
   info.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
-  info.pNext = nullptr;
   info.flags = flags;
+  info.pNext = nullptr;
   return info;
 }
 
 [[nodiscard]] inline VkFenceCreateInfo vk_fence_create_info(const VkFenceCreateFlags flags = 0) {
   VkFenceCreateInfo info = {};
   info.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
-  info.pNext = nullptr;
   info.flags = flags;
+  info.pNext = nullptr;
   return info;
 }
 
@@ -50,6 +48,7 @@ namespace VkUtility::CreateInfo {
   info.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
   info.codeSize = shader_data.size();
   info.pCode = reinterpret_cast<const uint32_t*>(shader_data.data());
+  info.pNext = nullptr;
   return info;
 }
 
