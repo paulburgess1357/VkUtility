@@ -62,7 +62,8 @@ if (NOT TARGET ${DEP_VkStartup})
 message("\nCloning VkStartup... (GitHub SSH key setup required)")
 FetchContent_Declare(
  ${DEP_VkStartup}
-   GIT_REPOSITORY git@github.com:paulburgess1357/VkStartup.git
+   #GIT_REPOSITORY git@github.com:paulburgess1357/VkStartup.git
+   SOURCE_DIR "C:/Users/paulb/Desktop/git projects vulkan/VkStartup"
    GIT_TAG        master
 )
 set(VkStartupFetchContentRepo True)
