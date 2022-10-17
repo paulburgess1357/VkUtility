@@ -8,12 +8,12 @@
 
 namespace VkUtility::File {
 
-[[nodiscard]] inline std::vector<char> read_file(const std::string& path) {
+[[nodiscard]] inline std::vector<char> read(const std::string& path) {
   std::ifstream file(path, std::ios::ate | std::ios::binary);
-  if (file.is_open()) {
-    VkError("Input file is open: " + path);
-    throw Exceptions::FileSystemException();
-  }
+  // if (file.is_open()) {
+  //   VkError("Input file is open: " + path);
+  //   throw Exceptions::FileSystemException();
+  // }
 
   if (!std::filesystem::exists(path)) {
     VkError("File does not exist: " + path);
