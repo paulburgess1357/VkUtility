@@ -20,7 +20,7 @@ namespace VkUtility::Memory {
   return VMABufferHandle{buffer_info, info, allocator};
 }
 template <typename T>
-void write_to_cpu_buffer(VmaAllocator allocator, VmaAllocation allocation, std::vector<T>& source) {
+void write_to_cpu_buffer(VmaAllocator allocator, VmaAllocation allocation, const std::vector<T>& source) {
   // Fill buffer starting at the beginning
   write_to_cpu_buffer(allocator, allocation, source.data(), source.size() * sizeof(T), 0);
 }
