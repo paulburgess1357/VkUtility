@@ -1,4 +1,5 @@
 #pragma once
+#include "VkShared/MemAlloc.h"
 #include <vulkan/vulkan.h>
 #include <vector>
 // ReSharper disable CppInitializedValueIsAlwaysRewritten
@@ -49,6 +50,18 @@ namespace VkUtility::CreateInfo {
   info.codeSize = shader_data.size();
   info.pCode = reinterpret_cast<const uint32_t*>(shader_data.data());
   info.pNext = nullptr;
+  return info;
+}
+
+[[nodiscard]] inline VmaAllocationCreateInfo vma_allocation_create_info(const VmaMemoryUsage vma_usage,
+                                                                        const VmaAllocationCreateFlags allocation_flags,
+                                                                        const VkMemoryPropertyFlags required_flags,
+                                                                        const VkMemoryPropertyFlags preferred_flags) {
+  VmaAllocationCreateInfo info = {};
+  info.usage = vma_usage;
+  info.flags = allocation_flags;
+  info.requiredFlags = required_flags;
+  info.preferredFlags = preferred_flags;
   return info;
 }
 

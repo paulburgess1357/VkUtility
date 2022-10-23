@@ -10,6 +10,13 @@ class VkUtilityException final : public std::exception {
   }
 };
 
+class VMAException final : public std::exception {
+ public:
+  [[nodiscard]] const char* what() const noexcept override {
+    return "VMA failed";
+  }
+};
+
 class FileSystemException final : public std::exception {
  public:
   [[nodiscard]] const char* what() const noexcept override {

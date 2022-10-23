@@ -2,6 +2,7 @@
 #include <vulkan/vulkan.h>
 #include "VkUtility/Misc/Exceptions.h"
 #include "VkShared/Macros.h"
+#include "VkShared/MemAlloc.h"
 
 namespace VkUtility {
 
@@ -83,6 +84,34 @@ class CreateDestroyShaderModule {
 
  private:
   VkDevice m_device{VK_NULL_HANDLE};
+};
+
+struct VMAHandle {
+  VkBuffer handle{VK_NULL_HANDLE};
+  VmaAllocation allocation{VK_NULL_HANDLE};
+};
+
+class CreateDestroyVMABuffer {
+ public:
+  void create() {
+    handle.handle = VK_NULL_HANDLE;
+    handle.allocation = VK_NULL_HANDLE;
+  }
+  void create(const VkBufferCreateInfo& buffer_info, const VmaAllocationCreateInfo& vma_info,
+              VmaAllocator vma_allocator) {
+    VkCheck(vmaCreateBuffer(vma_allocator, &buffer_info, &vma_info, &handle.handle, &handle.allocation, nullptr),
+            Exceptions::VMAException());
+    m_allocator = vma_allocator;
+  }
+  void destroy() const {
+    if (handle.handle && handle.allocation && m_allocator) {
+      vmaDestroyBuffer(m_allocator, handle.handle, handle.allocation);
+    }
+  }
+  VMAHandle handle;
+
+ private:
+  VmaAllocator m_allocator{VK_NULL_HANDLE};
 };
 
 }  // namespace VkUtility
