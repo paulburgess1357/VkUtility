@@ -19,7 +19,20 @@ namespace VkUtility::Memory {
                                                            VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 0);
   return VMABufferHandle{buffer_info, info, allocator};
 }
+template <typename T>
+void write_to_cpu_buffer(VmaAllocator allocator, VmaAllocation allocation, std::vector<T>& source) {
+  // Fill buffer starting at the beginning
+  write_to_cpu_buffer(allocator, allocation, source.data(), source.size() * sizeof(T), 0);
+}
 
-// TODO left off on writting map memory functions.
+inline void write_to_cpu_buffer(VmaAllocator allocator, VmaAllocation allocation, const void* source,
+                                const VkDeviceSize source_size, const VkDeviceSize dest_offset = 0) {
+  // Fill portion of buffer
+  void* destination{nullptr};
+  vmaMapMemory(allocator, allocation, &destination);
+  destination = static_cast<char*>(destination) + dest_offset;
+  memcpy(destination, source, source_size);
+  vmaUnmapMemory(allocator, allocation);
+}
 
 }  // namespace VkUtility::Memory
