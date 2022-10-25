@@ -87,6 +87,16 @@ class CreateDestroyShaderModule {
 };
 
 struct VMAHandle {
+  // ReSharper disable once CppNonExplicitConvertingConstructor
+  VMAHandle(VkBuffer buffer) {
+    handle = buffer;
+    allocation = VK_NULL_HANDLE;
+  }
+
+  [[nodiscard]] bool operator!() const {
+    return handle == VK_NULL_HANDLE;
+  }
+
   VkBuffer handle{VK_NULL_HANDLE};
   VmaAllocation allocation{VK_NULL_HANDLE};
 };
@@ -108,7 +118,7 @@ class CreateDestroyVMABuffer {
       vmaDestroyBuffer(m_allocator, handle.handle, handle.allocation);
     }
   }
-  VMAHandle handle;
+  VMAHandle handle{VK_NULL_HANDLE};
 
  private:
   VmaAllocator m_allocator{VK_NULL_HANDLE};

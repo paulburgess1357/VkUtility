@@ -19,6 +19,7 @@ namespace VkUtility::Memory {
                                                            VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 0);
   return VMABufferHandle{buffer_info, info, allocator};
 }
+
 template <typename T>
 void write_to_cpu_buffer(VmaAllocator allocator, VmaAllocation allocation, const std::vector<T>& source) {
   // Fill buffer starting at the beginning
