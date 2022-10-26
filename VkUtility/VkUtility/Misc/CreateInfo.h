@@ -65,4 +65,27 @@ namespace VkUtility::CreateInfo {
   return info;
 }
 
+[[nodiscard]] inline VkCommandBufferBeginInfo vk_command_buffer_begin_info(const VkCommandBufferUsageFlags flags) {
+  VkCommandBufferBeginInfo info = {};
+  info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+  info.pInheritanceInfo = nullptr;
+  info.flags = flags;
+  info.pNext = nullptr;
+  return info;
+}
+
+[[nodiscard]] inline VkSubmitInfo vk_submit_info(const VkCommandBuffer& cmd_buffer) {
+  VkSubmitInfo info = {};
+  info.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+  info.commandBufferCount = 1;
+  info.pCommandBuffers = &cmd_buffer;
+  info.waitSemaphoreCount = 0;
+  info.pWaitSemaphores = nullptr;
+  info.pWaitDstStageMask = nullptr;
+  info.signalSemaphoreCount = 0;
+  info.pSignalSemaphores = nullptr;
+  info.pNext = nullptr;
+  return info;
+}
+
 }  // namespace VkUtility::CreateInfo

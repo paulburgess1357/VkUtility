@@ -24,4 +24,10 @@ class FileSystemException final : public std::exception {
   }
 };
 
+class ImmediateSubmitException final : public std::exception {
+ public:
+  [[nodiscard]] const char* what() const noexcept override {
+    return "Immediate submit failed";
+  }
+};
 }  // namespace VkUtility::Exceptions

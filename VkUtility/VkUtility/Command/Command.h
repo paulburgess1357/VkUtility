@@ -9,7 +9,7 @@ namespace VkUtility::Command {
 
 [[nodiscard]] inline VkCommandPoolHandle create_command_pool(VkDevice device, const uint32_t queue_family_idx,
                                                              const VkCommandPoolCreateFlags flags = 0) {
-  const auto info = VkUtility::CreateInfo::vk_command_pool_create_info(queue_family_idx, flags);
+  const auto info = CreateInfo::vk_command_pool_create_info(queue_family_idx, flags);
   return VkCommandPoolHandle{info, device};
 }
 
