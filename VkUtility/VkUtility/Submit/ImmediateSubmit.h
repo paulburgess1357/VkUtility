@@ -15,7 +15,6 @@ struct UploadContext {
 class ImmediateSubmit {
  public:
   ImmediateSubmit(VkDevice device, VkQueue queue, const uint32_t queue_family_idx);
-  // void operator()(std::function<void(VkCommandBuffer cmd)>&& function) const;
   void submit(std::function<void(VkCommandBuffer cmd)>&& function) const;
 
  private:
