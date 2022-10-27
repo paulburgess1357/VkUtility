@@ -88,4 +88,12 @@ namespace VkUtility::CreateInfo {
   return info;
 }
 
+[[nodiscard]] inline VkBufferCreateInfo vk_buffer_create_info(const VkDeviceSize size, const VkBufferUsageFlags usage) {
+  VkBufferCreateInfo info = {};
+  info.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+  info.size = size;
+  info.usage = usage;
+  return info;
+}
+
 }  // namespace VkUtility::CreateInfo
