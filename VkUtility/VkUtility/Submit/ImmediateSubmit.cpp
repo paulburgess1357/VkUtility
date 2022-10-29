@@ -31,7 +31,8 @@ void ImmediateSubmit::submit(std::function<void(VkCommandBuffer cmd)>&& function
   VkCheck(vkEndCommandBuffer(upload_ctx.cmd_buffer), Exceptions::ImmediateSubmitException());
 
   // Submit command buffer
-  const auto submit_info = CreateInfo::vk_submit_info(upload_ctx.cmd_buffer);
+  constexpr auto wait_stage{VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT};
+  const auto submit_info = CreateInfo::vk_submit_info(wait_stage, upload_ctx.cmd_buffer);
   VkCheck(vkQueueSubmit(upload_ctx.queue, 1, &submit_info, upload_ctx.upload_fence()),
           Exceptions::ImmediateSubmitException());
 

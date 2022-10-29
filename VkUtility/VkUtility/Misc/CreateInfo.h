@@ -74,14 +74,15 @@ namespace VkUtility::CreateInfo {
   return info;
 }
 
-[[nodiscard]] inline VkSubmitInfo vk_submit_info(const VkCommandBuffer& cmd_buffer) {
+[[nodiscard]] inline VkSubmitInfo vk_submit_info(const VkPipelineStageFlags& wait_stage,
+                                                 const VkCommandBuffer& cmd_buffer) {
   VkSubmitInfo info = {};
   info.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
   info.commandBufferCount = 1;
   info.pCommandBuffers = &cmd_buffer;
   info.waitSemaphoreCount = 0;
   info.pWaitSemaphores = nullptr;
-  info.pWaitDstStageMask = nullptr;
+  info.pWaitDstStageMask = &wait_stage;
   info.signalSemaphoreCount = 0;
   info.pSignalSemaphores = nullptr;
   info.pNext = nullptr;
