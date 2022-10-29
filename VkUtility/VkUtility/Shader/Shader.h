@@ -6,6 +6,7 @@
 namespace VkUtility::Shader {
 
 [[nodiscard]] inline VkShaderModuleHandle load(const std::string& path, VkDevice device) {
+  // ReSharper disable once CppInitializedValueIsAlwaysRewritten
   std::string full_path{path};
 #ifdef SHADER_PATH
   full_path = std::string{SHADER_PATH} + path;
