@@ -3,6 +3,7 @@
 #include "VkUtility/Misc/CreateInfo.h"
 #include "VkUtility/Submit/ImmediateSubmit.h"
 #include "VkShared/MemAlloc.h"
+#include <cstring>
 
 namespace VkUtility::Memory {
 
