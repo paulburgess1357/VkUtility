@@ -86,14 +86,14 @@ class CreateDestroyShaderModule {
   VkDevice m_device{VK_NULL_HANDLE};
 };
 
-struct VMAHandle {
+struct VMABuffer {
   // ReSharper disable once CppNonExplicitConvertingConstructor
-  explicit VMAHandle(VkBuffer buffer) {
+  explicit VMABuffer(VkBuffer buffer) {
     handle = buffer;
     allocation = VK_NULL_HANDLE;
   }
 
-  VMAHandle& operator=(VkBuffer buffer) {
+  VMABuffer& operator=(VkBuffer buffer) {
     handle = buffer;
     allocation = VK_NULL_HANDLE;
     return *this;
@@ -124,7 +124,51 @@ class CreateDestroyVMABuffer {
       vmaDestroyBuffer(m_allocator, handle.handle, handle.allocation);
     }
   }
-  VMAHandle handle{VK_NULL_HANDLE};
+  VMABuffer handle{VK_NULL_HANDLE};
+
+ private:
+  VmaAllocator m_allocator{VK_NULL_HANDLE};
+};
+
+struct VMAImage {
+  // ReSharper disable once CppNonExplicitConvertingConstructor
+  explicit VMAImage(VkImage buffer) {
+    handle = buffer;
+    allocation = VK_NULL_HANDLE;
+  }
+
+  VMAImage& operator=(VkImage buffer) {
+    handle = buffer;
+    allocation = VK_NULL_HANDLE;
+    return *this;
+  }
+
+  [[nodiscard]] bool operator!() const {
+    return handle == VK_NULL_HANDLE;
+  }
+
+  VkImage handle{VK_NULL_HANDLE};
+  VmaAllocation allocation{VK_NULL_HANDLE};
+};
+
+class CreateDestroyVMAImage {
+ public:
+  void create() {
+    handle.handle = VK_NULL_HANDLE;
+    handle.allocation = VK_NULL_HANDLE;
+  }
+  void create(const VkImageCreateInfo& image_info, const VmaAllocationCreateInfo& vma_info,
+              VmaAllocator vma_allocator) {
+    VkCheck(vmaCreateImage(vma_allocator, &image_info, &vma_info, &handle.handle, &handle.allocation, nullptr),
+            Exceptions::VMAException());
+    m_allocator = vma_allocator;
+  }
+  void destroy() const {
+    if (handle.handle && handle.allocation && m_allocator) {
+      vmaDestroyImage(m_allocator, handle.handle, handle.allocation);
+    }
+  }
+  VMAImage handle{VK_NULL_HANDLE};
 
  private:
   VmaAllocator m_allocator{VK_NULL_HANDLE};

@@ -4,6 +4,7 @@
 #include "VkUtility/Submit/ImmediateSubmit.h"
 #include "VkShared/MemAlloc.h"
 #include <cstring>
+#include <vulkan/vulkan.h>
 
 namespace VkUtility::Memory {
 

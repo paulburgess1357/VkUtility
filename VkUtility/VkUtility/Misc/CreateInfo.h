@@ -97,4 +97,42 @@ namespace VkUtility::CreateInfo {
   return info;
 }
 
+[[nodiscard]] inline VkImageCreateInfo vk_image_create_info(const VkFormat format, const VkImageUsageFlags usage,
+                                                            const VkExtent3D extent,
+                                                            const VkSampleCountFlagBits sample_count,
+                                                            const uint32_t mip_levels, const uint32_t array_layers = 1,
+                                                            const VkImageType image_type = VK_IMAGE_TYPE_2D) {
+  VkImageCreateInfo info = {};
+  info.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
+  info.tiling = VK_IMAGE_TILING_OPTIMAL;
+
+  info.imageType = image_type;
+  info.arrayLayers = array_layers;
+  info.format = format;
+  info.extent = extent;
+  info.mipLevels = mip_levels;
+  info.samples = sample_count;
+  info.usage = usage;
+  info.pNext = nullptr;
+  return info;
+}
+
+[[nodiscard]] inline VkImageViewCreateInfo vk_image_view_create_info(
+    VkImage image, const VkFormat format, const VkImageAspectFlags aspect_flags,
+    const VkImageViewType image_type = VK_IMAGE_VIEW_TYPE_2D) {
+  VkImageViewCreateInfo info = {};
+  info.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+
+  info.viewType = image_type;
+  info.image = image;
+  info.format = format;
+  info.subresourceRange.baseMipLevel = 0;
+  info.subresourceRange.levelCount = 1;
+  info.subresourceRange.baseArrayLayer = 0;
+  info.subresourceRange.layerCount = 1;
+  info.subresourceRange.aspectMask = aspect_flags;
+  info.pNext = nullptr;
+  return info;
+}
+
 }  // namespace VkUtility::CreateInfo

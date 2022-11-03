@@ -8,4 +8,5 @@ using VkSemaphoreHandle = VkShared::THandle<CreateDestroySemaphore>;
 using VkFenceHandle = VkShared::THandle<CreateDestroyFence>;
 using VkShaderModuleHandle = VkShared::THandle<CreateDestroyShaderModule>;
 using VMABufferHandle = VkShared::THandle<CreateDestroyVMABuffer>;
+using VMAImageHandle = VkShared::THandle<CreateDestroyVMAImage>;
 }  // namespace VkUtility
