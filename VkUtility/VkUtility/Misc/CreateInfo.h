@@ -118,7 +118,7 @@ namespace VkUtility::CreateInfo {
 }
 
 [[nodiscard]] inline VkImageViewCreateInfo vk_image_view_create_info(
-    VkImage image, const VkFormat format, const VkImageAspectFlags aspect_flags,
+    VkImage image, const VkFormat format, const VkImageAspectFlags aspect_flags, const uint32_t array_layers = 1,
     const VkImageViewType image_type = VK_IMAGE_VIEW_TYPE_2D) {
   VkImageViewCreateInfo info = {};
   info.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
@@ -129,7 +129,7 @@ namespace VkUtility::CreateInfo {
   info.subresourceRange.baseMipLevel = 0;
   info.subresourceRange.levelCount = 1;
   info.subresourceRange.baseArrayLayer = 0;
-  info.subresourceRange.layerCount = 1;
+  info.subresourceRange.layerCount = array_layers;
   info.subresourceRange.aspectMask = aspect_flags;
   info.pNext = nullptr;
   return info;

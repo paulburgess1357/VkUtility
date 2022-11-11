@@ -174,4 +174,25 @@ class CreateDestroyVMAImage {
   VmaAllocator m_allocator{VK_NULL_HANDLE};
 };
 
+class CreateDestroyImageView {
+ public:
+  void create() {
+    handle = VK_NULL_HANDLE;
+  }
+  void create(const VkImageViewCreateInfo& info, VkDevice vk_device) {
+    VkCheck(vkCreateImageView(vk_device, &info, nullptr, &handle), Exceptions::VkUtilityException());
+    m_device = vk_device;
+  }
+
+  void destroy() const {
+    if (handle && m_device) {
+      vkDestroyImageView(m_device, handle, nullptr);
+    }
+  }
+  VkImageView handle{VK_NULL_HANDLE};
+
+ private:
+  VkDevice m_device{VK_NULL_HANDLE};
+};
+
 }  // namespace VkUtility
