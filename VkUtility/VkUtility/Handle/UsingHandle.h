@@ -18,7 +18,6 @@ struct VkImageWrapped {
   [[nodiscard]] const VkImageView& image_view() const {
     return view_handle();
   }
-
   VMAImageHandle image_handle{};
   VKImageViewHandle view_handle{};
 };
@@ -30,7 +29,6 @@ struct VkBufferWrapped {
   [[nodiscard]] VmaAllocation allocation() const {
     return handle().allocation;
   }
-
   VMABufferHandle handle{};
 };
 
