@@ -1,6 +1,13 @@
 set(TargetName "VkUtilityTest")
 message("\nBuilding " ${TargetName})
 
+# Paul B local builds
+set(PB_LOCAL FALSE)
+set(PB_LOCAL_PATH "C:/Users/paulb/Desktop/git projects vulkan/")
+if(UNIX)
+	set(PB_LOCAL_PATH "/home/paul/Desktop/git_projects/")
+endif()
+
 cmake_minimum_required(VERSION 3.9.0)
 project(${TargetName})
 set(CMAKE_CXX_STANDARD 23)
@@ -59,13 +66,21 @@ endif()
 # VkStartup
 set(DEP_VkStartup VkStartup)
 if (NOT TARGET ${DEP_VkStartup})
-message("\nCloning VkStartup... (GitHub SSH key setup required)")
-FetchContent_Declare(
- ${DEP_VkStartup}
-   #GIT_REPOSITORY git@github.com:paulburgess1357/VkStartup.git
-   SOURCE_DIR "C:/Users/paulb/Desktop/git projects vulkan/VkStartup"
-   GIT_TAG        master
-)
+	if(PB_LOCAL)
+		message("Local Build")
+		FetchContent_Declare(
+		 ${DEP_VkStartup}
+		   SOURCE_DIR ${PB_LOCAL_PATH}${DEP_VkStartup}
+		   GIT_TAG        master
+		)
+	else()
+		message("\nCloning VkStartup... (GitHub SSH key setup required)")
+		FetchContent_Declare(
+		 ${DEP_VkStartup}
+		   GIT_REPOSITORY git@github.com:paulburgess1357/VkStartup.git
+		   GIT_TAG        master
+		)
+	endif()
 set(VkStartupFetchContentRepo True)
 FetchContent_MakeAvailable(${DEP_VkStartup})
 endif()

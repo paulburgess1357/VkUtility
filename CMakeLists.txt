@@ -1,6 +1,13 @@
 set(TargetName "VkUtility")
 message("\nBuilding " ${TargetName})
 
+# Paul B local builds
+set(PB_LOCAL FALSE)
+set(PB_LOCAL_PATH "C:/Users/paulb/Desktop/git projects vulkan/")
+if(UNIX)
+	set(PB_LOCAL_PATH "/home/paul/Desktop/git_projects/")
+endif()
+
 cmake_minimum_required(VERSION 3.9.0)
 project(${TargetName})
 set(CMAKE_CXX_STANDARD 23)
@@ -52,40 +59,34 @@ else()
 	target_link_libraries(${TargetName} PRIVATE VulkanMemoryAllocator)
 endif()
 
-# VkShared
+# Clone VkShared
 set(DEP_VkShared VkShared)
-if (NOT TARGET ${DEP_VkShared})
-message("\nCloning VkShared... (GitHub SSH key setup required)")
-FetchContent_Declare(
- ${DEP_VkShared}
-   #GIT_REPOSITORY git@github.com:paulburgess1357/VkShared.git
-   SOURCE_DIR "C:/Users/paulb/Desktop/git projects vulkan/VkShared"
-   GIT_TAG        master
-)
-set(VkSharedFetchContentRepo True)
-FetchContent_MakeAvailable(${DEP_VkShared})
+if (NOT TARGET ${DEP_VkShared})	
+	if(PB_LOCAL)
+		message("Local Build")
+		FetchContent_Declare(
+		${DEP_VkShared}
+		SOURCE_DIR ${PB_LOCAL_PATH}${DEP_VkShared}
+		GIT_TAG        master
+		)
+	else()
+		message("\nCloning VkShared... (GitHub SSH key setup required)")
+		FetchContent_Declare(
+		${DEP_VkShared}
+		GIT_REPOSITORY git@github.com:paulburgess1357/VkShared.git
+		GIT_TAG        master
+		)
+	endif()
+	
+	set(VkSharedFetchContentRepo True)
+	FetchContent_MakeAvailable(${DEP_VkShared})
 endif()
-
-# VkStartup
-# set(DEP_VkStartup VkStartup)
-# if (NOT TARGET ${DEP_VkStartup})
-# message("\nCloning VkStartup... (GitHub SSH key setup required)")
-# FetchContent_Declare(
-#  ${DEP_VkStartup}
-#    GIT_REPOSITORY git@github.com:paulburgess1357/VkStartup.git
-#    GIT_TAG        master
-# )
-# set(VkStartupFetchContentRepo True)
-# FetchContent_MakeAvailable(${DEP_VkStartup})
-# endif()
 
 list(APPEND IncludeDirectories 
 	${VkShared_SOURCE_DIR}/${DEP_VkShared}
-#	${VkStartup_SOURCE_DIR}/${DEP_VkStartup}
 )
 list(APPEND LinkDirectories 
 	${DEP_VkShared}
-#	${DEP_VkStartup}
 )
 
 target_include_directories(${TargetName} PRIVATE 
