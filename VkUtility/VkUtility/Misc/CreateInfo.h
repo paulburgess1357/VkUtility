@@ -135,4 +135,15 @@ namespace VkUtility::CreateInfo {
   return info;
 }
 
+[[nodiscard]] inline VkDescriptorPoolCreateInfo vk_descriptor_pool_create_info(
+    const uint32_t descriptor_set_count, const VkDescriptorPoolCreateFlags flags,
+    const std::vector<VkDescriptorPoolSize>& descriptor_type_counts) {
+  VkDescriptorPoolCreateInfo pool_info = {};
+  pool_info.flags = flags;
+  pool_info.maxSets = descriptor_set_count;
+  pool_info.poolSizeCount = static_cast<uint32_t>(descriptor_type_counts.size());
+  pool_info.pPoolSizes = descriptor_type_counts.data();
+  return pool_info;
+}
+
 }  // namespace VkUtility::CreateInfo

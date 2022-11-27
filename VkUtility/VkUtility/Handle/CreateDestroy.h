@@ -195,4 +195,25 @@ class CreateDestroyImageView {
   VkDevice m_device{VK_NULL_HANDLE};
 };
 
+class CreateDestroyDescriptorPool {
+ public:
+  void create() {
+    handle = VK_NULL_HANDLE;
+  }
+  void create(const VkDescriptorPoolCreateInfo& info, VkDevice vk_device) {
+    VkCheck(vkCreateDescriptorPool(vk_device, &info, nullptr, &handle), Exceptions::VkUtilityException());
+    m_device = vk_device;
+  }
+
+  void destroy() const {
+    if (handle && m_device) {
+      vkDestroyDescriptorPool(m_device, handle, nullptr);
+    }
+  }
+  VkDescriptorPool handle{VK_NULL_HANDLE};
+
+ private:
+  VkDevice m_device{VK_NULL_HANDLE};
+};
+
 }  // namespace VkUtility

@@ -2,7 +2,7 @@ set(TargetName "VkUtility")
 message("\nBuilding " ${TargetName})
 
 # Paul B local builds
-set(PB_LOCAL FALSE)
+set(PB_LOCAL TRUE)
 set(PB_LOCAL_PATH "C:/Users/paulb/Desktop/git projects vulkan/")
 if(UNIX)
 	set(PB_LOCAL_PATH "/home/paul/Desktop/git_projects/")
