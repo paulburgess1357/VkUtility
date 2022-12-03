@@ -216,4 +216,25 @@ class CreateDestroyDescriptorPool {
   VkDevice m_device{VK_NULL_HANDLE};
 };
 
+class CreateDestroyDescriptorLayout {
+ public:
+  void create() {
+    handle = VK_NULL_HANDLE;
+  }
+  void create(const VkDescriptorSetLayoutCreateInfo& info, VkDevice vk_device) {
+    VkCheck(vkCreateDescriptorSetLayout(vk_device, &info, nullptr, &handle), Exceptions::VkUtilityException());
+    m_device = vk_device;
+  }
+
+  void destroy() const {
+    if (handle && m_device) {
+      vkDestroyDescriptorSetLayout(m_device, handle, nullptr);
+    }
+  }
+  VkDescriptorSetLayout handle{VK_NULL_HANDLE};
+
+ private:
+  VkDevice m_device{VK_NULL_HANDLE};
+};
+
 }  // namespace VkUtility
