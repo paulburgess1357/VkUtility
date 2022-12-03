@@ -3,6 +3,7 @@
 #include <vector>
 #include <utility>
 #include <vulkan/vulkan.h>
+#include <queue>
 
 // Manages allocation of descriptor sets.  New descriptor pools will automatically be created
 // once existing pools are full.  All pools can be reset and reused.
@@ -12,17 +13,18 @@ namespace VkUtility::Descriptor {
 class DescriptorAllocator {
  public:
   explicit DescriptorAllocator(VkDevice device);
-
-  // void reset_pools();
-  //[[nodiscard]] bool allocate(VkDescriptorSet* set, VkDescriptorSetLayout layout);
+  void allocate(VkDescriptorSetLayout layout, VkDescriptorSet* handle);
+  void reset();
 
  private:
+  [[nodiscard]] VkDescriptorPoolHandle pool(const uint32_t ratio_multiplier, const uint32_t descriptor_set_count,
+                                            const VkDescriptorPoolCreateFlags flags);
   [[nodiscard]] VkDescriptorPoolHandle create_pool(const uint32_t ratio_multiplier, const uint32_t descriptor_set_count,
                                                    const VkDescriptorPoolCreateFlags flags);
 
   VkDescriptorPoolHandle m_current_pool{};
-  std::vector<VkDescriptorPoolHandle> m_used_pools;
-  std::vector<VkDescriptorPoolHandle> m_free_pools;
+  std::queue<VkDescriptorPoolHandle> m_used_pools;
+  std::queue<VkDescriptorPoolHandle> m_free_pools;
 
   VkDevice m_device{VK_NULL_HANDLE};
 };

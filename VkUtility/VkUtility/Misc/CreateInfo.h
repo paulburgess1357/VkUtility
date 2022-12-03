@@ -146,4 +146,15 @@ namespace VkUtility::CreateInfo {
   return pool_info;
 }
 
+[[nodiscard]] inline VkDescriptorSetAllocateInfo vk_descriptor_alloc_info(VkDescriptorSetLayout layout,
+                                                                          VkDescriptorPool pool) {
+  VkDescriptorSetAllocateInfo info = {};
+  info.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+  info.pSetLayouts = &layout;
+  info.descriptorPool = pool;
+  info.descriptorSetCount = 1;
+  info.pNext = nullptr;
+  return info;
+}
+
 }  // namespace VkUtility::CreateInfo
